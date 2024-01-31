@@ -1,0 +1,11 @@
+#Download the installation files for Current Channel 
+\\app01\DeployPackages\Microsoft365Apps\setup.exe /download \\app01\DeployPackages\Microsoft365Apps\configuration-cc.xml
+
+#Download the installation files for Monthly Enterprise Channel
+\\app01\DeployPackages\Microsoft365Apps\setup.exe /download \\app01\DeployPackages\Microsoft365Apps\configuration-mec.xml
+
+#Deploy to the Current Channel group
+\\app01\DeployPackages\Microsoft365Apps\setup.exe /configure \\app01\DeployPackages\Microsoft365Apps\configuration-cc.xml
+
+#Deploy to the Monthly Enterprise Channel group
+\\app01\DeployPackages\Microsoft365Apps\setup.exe /configure \\app01\DeployPackages\Microsoft365Apps\configuration-mec.xml
