@@ -1,0 +1,22 @@
+<Configuration ID="e371dc42-6844-4284-90cb-5792ccbb9902">
+  <Add OfficeClientEdition="64" Channel="Current" SourcePath="\\app01\DeployPackages\Microsoft365Apps\Current" AllowCdnFallback="TRUE">
+    <Product ID="O365ProPlusRetail">
+      <Language ID="en-us" />
+      <ExcludeApp ID="Groove" />
+      <ExcludeApp ID="Lync" />
+      <ExcludeApp ID="OneDrive" />
+    </Product>
+  </Add>
+  <Property Name="SharedComputerLicensing" Value="1" />
+  <Property Name="FORCEAPPSHUTDOWN" Value="TRUE" />
+  <Property Name="DeviceBasedLicensing" Value="0" />
+  <Property Name="SCLCacheOverride" Value="0" />
+  <Updates Enabled="TRUE" UpdatePath="\\app01\DeployPackages\Microsoft365Apps\MonthlyEnterprise" />
+  <RemoveMSI />
+  <AppSettings>
+    <Setup Name="Company" Value="Community Mental Health Affiliates" />
+    <User Key="software\microsoft\office\16.0\common\internet" Name="opendirectlyinapp" Value="1" Type="REG_DWORD" App="office16" Id="L_OpenDirectlyInApp" />
+    <User Key="software\microsoft\office\16.0\common\internet" Name="opendirectlyinapp" Value="1" Type="REG_DWORD" App="office16" Id="L_OpenOfficeDocumentDirectlyInOfficeApplication" />
+  </AppSettings>
+  <Display Level="None" AcceptEULA="TRUE" />
+</Configuration>
