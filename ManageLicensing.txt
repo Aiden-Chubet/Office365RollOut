@@ -1,0 +1,34 @@
+﻿
+
+$userId = '365User@domain.org'
+
+Connect-MgGraph
+
+## Get the services that have already been disabled for the user.
+$userLicense = Get-MgUserLicenseDetail -UserId $userId
+$userDisabledPlans = $userLicense.ServicePlans | `
+    Where ProvisioningStatus -eq "Disabled" | `
+    Select -ExpandProperty ServicePlanId
+
+#The rest is only applicable if not managed through dynamic EntraID licensing assignment
+
+## Get the new service plans that are going to be disabled
+$e3Sku = Get-MgSubscribedSku -All | Where SkuPartNumber -eq 'ENTERPRISEPACK'
+$newDisabledPlans = $e3Sku.ServicePlans | `
+    Where ServicePlanName -in ("SHAREPOINTENTERPRISE", "SHAREPOINTWAC") | `
+    Select -ExpandProperty ServicePlanId
+
+## Merge the new plans that are to be disabled with the user's current state of disabled plans
+$disabledPlans = ($userDisabledPlans + $newDisabledPlans) | Select -Unique
+
+$addLicenses = @(
+    @{
+        SkuId = $e3Sku.SkuId
+        DisabledPlans = $disabledPlans
+    }
+)
+## Update user's license
+Set-MgUserLicense -UserId $userId -AddLicenses $addLicenses -RemoveLicenses @()
+
+## Check user's service plans
+Get-MgUserLicenseDetail -UserId $userId | Where SkuPartNumber -eq 'ENTERPRISEPACK' |  select -ExpandProperty ServicePlans
